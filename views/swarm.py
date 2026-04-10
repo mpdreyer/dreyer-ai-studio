@@ -1,77 +1,103 @@
 import streamlit as st
-import asyncio
-import sys
-import os
+
+from agents.swarm_controller import SwarmController, ValidationError
+from core.state_manager import state
+from db.swarm_repository import SupabaseSwarmRepository, SwarmRun
+from utils.exceptions import handle_error
 
 
-def render_swarm(project: dict | None, sb):
+def _get_controller(sb) -> SwarmController:
+    return SwarmController(SupabaseSwarmRepository(sb))
+
+
+# ── Delfunktioner ──────────────────────────────────────────────────────────────
+
+def _render_header():
     st.subheader("🐝 Ruflo Testsvärm")
     st.caption("Upp till 90 parallella worker-agenter · Claude Code kör svärmens motor")
 
-    project_id = project["id"] if project else None
 
-    # Konfiguration
+def _render_form(controller: SwarmController):
+    """Konfigurationsformulär med validering. Returnerar True om svärm startades."""
     with st.container(border=True):
         st.markdown("**Svärm-konfiguration**")
         col1, col2, col3 = st.columns(3)
         with col1:
-            variant = st.text_area("Prompt-variant att testa", height=80,
-                                   value="Du är en hjälpsam AI-assistent. Besvara frågan: {input}")
+            variant = st.text_area(
+                "Prompt-variant att testa", height=80,
+                value="Du är en hjälpsam AI-assistent. Besvara frågan: {input}",
+            )
             variant_id = st.text_input("Variant-ID", value="v1")
         with col2:
             n_workers = st.slider("Antal workers", 5, 90, 30, step=5)
             max_concurrent = st.slider("Max parallella (rate limit)", 5, 30, 20, step=5)
         with col3:
-            domain = st.text_input("Testdomän", value="general")
+            domain = st.selectbox("Testdomän", ["general", "ai", "code"], index=0)
             st.metric("Estimerad kostnad", f"~{n_workers * 0.001:.3f} USD")
             st.metric("Estimerad tid", f"~{n_workers // max_concurrent * 3 + 10}s")
 
-    # Kör-knapp
     if st.button("🐝 Starta svärm", use_container_width=True, type="primary"):
-        st.info(f"""**Svärm konfigurerad:**
-- {n_workers} workers · max {max_concurrent} parallella
-- Variant: {variant_id}
-- Domän: {domain}
+        try:
+            config = controller.build_config(
+                variant, variant_id, n_workers, max_concurrent, domain
+            )
+            state.set_active_swarm(config)
+            st.info(f"""**Svärm konfigurerad:**
+- {config.n_workers} workers · max {config.max_concurrent} parallella
+- Variant-ID: `{config.variant_id}` · Domän: `{config.domain}`
 
-**Kör i terminal:**
+**Kör i terminal (rekommenderat):**
 ```bash
-cd dreyer-ai-studio
-python -m agents.swarm_runner \\
-  --variant "{variant[:50]}..." \\
-  --variant-id {variant_id} \\
-  --workers {n_workers} \\
-  --concurrent {max_concurrent}
+cd ~/dreyer-ai-studio
+bash run_swarm.sh {config.to_cli_args()}
 ```
 
-Eller öppna **Claude Code** och kör `swarm.py` direkt — den är konfigurerad och klar.""")
+**Eller direkt med python3:**
+```bash
+cd ~/dreyer-ai-studio
+python3 -m agents.swarm_runner {config.to_cli_args()}
+```
 
-    st.divider()
+**Hjälp:** `python3 -m agents.swarm_runner --help`""")
+        except ValidationError as e:
+            st.error(f"Konfigurationsfel: {e}")
 
-    # Historiska körningar från Supabase
+
+@handle_error("Kunde inte ladda körningshistorik", fallback=None)
+def _render_history(controller: SwarmController):
     st.markdown("**Historiska svärm-körningar**")
-    try:
-        runs = sb.table("swarm_runs").select("*").order("created_at", desc=True).limit(10).execute()
-        if runs.data:
-            for run in runs.data:
-                status_icon = "✅" if run["status"] == "completed" else "🔄" if run["status"] == "running" else "❌"
-                with st.container(border=True):
-                    col1, col2, col3, col4 = st.columns([2, 1, 1, 2])
-                    col1.markdown(f"{status_icon} **{run['variant_id']}**")
-                    col1.caption(run["created_at"][:16] if run.get("created_at") else "—")
-                    col2.metric("Workers", run["n_workers"])
-                    pass_rate = run.get("pass_rate")
-                    col3.metric("Pass rate", f"{pass_rate*100:.1f}%" if pass_rate else "—")
-                    decision = run.get("decision", "—")
-                    if decision and "GODKÄND" in decision:
-                        col4.success(decision[:80])
-                    elif decision and decision != "—":
-                        col4.error(decision[:80])
-        else:
-            st.caption("Inga svärm-körningar ännu. Kör din första svärm via terminalen.")
-    except Exception as e:
-        st.caption("swarm_runs-tabellen saknas — kör schema.sql i Supabase först.")
+    runs = controller.get_runs(limit=10)
+    if not runs:
+        st.caption("Inga svärm-körningar ännu. Kör din första svärm via terminalen.")
+        return
 
-    st.divider()
+    for run in runs:
+        _render_run_card(run)
+
+
+def _render_run_card(run: SwarmRun):
+    status_icon = (
+        "✅" if run.status == "completed"
+        else "🔄" if run.status == "running"
+        else "❌"
+    )
+    with st.container(border=True):
+        col1, col2, col3, col4 = st.columns([2, 1, 1, 2])
+        col1.markdown(f"{status_icon} **{run.variant_id}**")
+        col1.caption(run.created_at[:16] if run.created_at else "—")
+        col2.metric("Workers", run.n_workers)
+        col3.metric(
+            "Pass rate",
+            f"{run.pass_rate * 100:.1f}%" if run.pass_rate is not None else "—",
+        )
+        decision = run.decision or "—"
+        if "GODKÄND" in decision:
+            col4.success(decision[:80])
+        elif decision != "—":
+            col4.error(decision[:80])
+
+
+def _render_architecture():
     st.markdown("**Ruflo-arkitektur**")
     st.code("""
 Spawner (Claude Code)
@@ -88,3 +114,15 @@ Spawner (Claude Code)
                    │
     Diavolo säkerhetsgranskar parallellt
     """, language="text")
+
+
+# ── Publik entry point ─────────────────────────────────────────────────────────
+
+def render_swarm(project: dict | None, sb):
+    controller = _get_controller(sb)
+    _render_header()
+    _render_form(controller)
+    st.divider()
+    _render_history(controller)
+    st.divider()
+    _render_architecture()

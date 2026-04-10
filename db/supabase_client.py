@@ -1,6 +1,7 @@
 import streamlit as st
 from supabase import create_client, Client
 from functools import lru_cache
+from core.state import get_active_project_id
 
 
 @st.cache_resource
@@ -12,13 +13,10 @@ def get_supabase() -> Client:
 
 
 def get_active_project(sb: Client) -> dict | None:
-    if "active_project_id" not in st.session_state:
-        res = sb.table("projects").select("*").eq("status", "active").order("created_at", desc=True).limit(1).execute()
-        if res.data:
-            st.session_state["active_project_id"] = res.data[0]["id"]
-            return res.data[0]
+    pid = get_active_project_id()
+    if not pid:
         return None
-    res = sb.table("projects").select("*").eq("id", st.session_state["active_project_id"]).single().execute()
+    res = sb.table("projects").select("*").eq("id", pid).single().execute()
     return res.data
 
 

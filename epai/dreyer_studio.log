@@ -1,0 +1,124 @@
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://192.168.0.57:8501
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+[31m──[0m[31m────────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────────[0m[31m──[0m
+[31m [0m [2m/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/stre[0m [31m [0m
+[31m [0m [2mamlit/runtime/scriptrunner/[0m[1mexec_code.py[0m:129 in exec_func_with_error_handling         [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/stre[0m [31m [0m
+[31m [0m [2mamlit/runtime/scriptrunner/[0m[1mscript_runner.py[0m:689 in code_to_exec                      [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Users/mattiasdreyer/dreyer-ai-studio/epai/[0m[1mapp.py[0m:21 in <module>                     [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m   [2m 18 [0m                                                                               [31m [0m
+[31m [0m   [2m 19 [0m[94mfrom[0m[90m [0m[4;96mconfig[0m[90m [0m[94mimport[0m ANLAGGNINGAR, OLLAMA_MODEL                                  [31m [0m
+[31m [0m   [2m 20 [0m[94mfrom[0m[90m [0m[4;96mmetadata_db[0m[90m [0m[94mimport[0m MetadataDB                                             [31m [0m
+[31m [0m [31m❱ [0m 21 [1;4;94mfrom[0m[1;4;90m [0m[1;4;96mpdf_export[0m[1;4;90m [0m[1;4;94mimport[0m[1;4m ([0m                                                       [31m [0m
+[31m [0m   [2m 22 [0m[2m│   [0m[1;4manswer_filename, export_full_report, export_single_answer, report_filename[0m [31m [0m
+[31m [0m   [2m 23 [0m[1;4m)[0m                                                                              [31m [0m
+[31m [0m   [2m 24 [0m[94mfrom[0m[90m [0m[4;96mrag[0m[90m [0m[94mimport[0m RAGResult, Source, get_collection_counts, stream_ask           [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Users/mattiasdreyer/dreyer-ai-studio/epai/[0m[1mpdf_export.py[0m:12 in <module>              [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m   [2m  9 [0m[94mfrom[0m[90m [0m[4;96mdatetime[0m[90m [0m[94mimport[0m datetime                                                  [31m [0m
+[31m [0m   [2m 10 [0m[94mfrom[0m[90m [0m[4;96mtyping[0m[90m [0m[94mimport[0m TYPE_CHECKING                                               [31m [0m
+[31m [0m   [2m 11 [0m                                                                               [31m [0m
+[31m [0m [31m❱ [0m 12 [1;4;94mfrom[0m[1;4;90m [0m[1;4;96mreportlab[0m[1;4;96m.[0m[1;4;96mlib[0m[1;4;90m [0m[1;4;94mimport[0m[1;4m colors[0m                                               [31m [0m
+[31m [0m   [2m 13 [0m[94mfrom[0m[90m [0m[4;96mreportlab[0m[4;96m.[0m[4;96mlib[0m[4;96m.[0m[4;96menums[0m[90m [0m[94mimport[0m TA_CENTER, TA_LEFT                             [31m [0m
+[31m [0m   [2m 14 [0m[94mfrom[0m[90m [0m[4;96mreportlab[0m[4;96m.[0m[4;96mlib[0m[4;96m.[0m[4;96mpagesizes[0m[90m [0m[94mimport[0m A4                                         [31m [0m
+[31m [0m   [2m 15 [0m[94mfrom[0m[90m [0m[4;96mreportlab[0m[4;96m.[0m[4;96mlib[0m[4;96m.[0m[4;96mstyles[0m[90m [0m[94mimport[0m ParagraphStyle, getSampleStyleSheet           [31m [0m
+[31m────────────────────────────────────────────────────────────────────────────────────────[0m
+[1;91mModuleNotFoundError: [0mNo module named [32m'reportlab'[0m
+[31m──[0m[31m────────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────────[0m[31m──[0m
+[31m [0m [2m/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/stre[0m [31m [0m
+[31m [0m [2mamlit/runtime/scriptrunner/[0m[1mexec_code.py[0m:129 in exec_func_with_error_handling         [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/stre[0m [31m [0m
+[31m [0m [2mamlit/runtime/scriptrunner/[0m[1mscript_runner.py[0m:689 in code_to_exec                      [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Users/mattiasdreyer/dreyer-ai-studio/epai/[0m[1mapp.py[0m:21 in <module>                     [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m   [2m 18 [0m                                                                               [31m [0m
+[31m [0m   [2m 19 [0m[94mfrom[0m[90m [0m[4;96mconfig[0m[90m [0m[94mimport[0m ANLAGGNINGAR, OLLAMA_MODEL                                  [31m [0m
+[31m [0m   [2m 20 [0m[94mfrom[0m[90m [0m[4;96mmetadata_db[0m[90m [0m[94mimport[0m MetadataDB                                             [31m [0m
+[31m [0m [31m❱ [0m 21 [1;4;94mfrom[0m[1;4;90m [0m[1;4;96mpdf_export[0m[1;4;90m [0m[1;4;94mimport[0m[1;4m ([0m                                                       [31m [0m
+[31m [0m   [2m 22 [0m[2m│   [0m[1;4manswer_filename, export_full_report, export_single_answer, report_filename[0m [31m [0m
+[31m [0m   [2m 23 [0m[1;4m)[0m                                                                              [31m [0m
+[31m [0m   [2m 24 [0m[94mfrom[0m[90m [0m[4;96mrag[0m[90m [0m[94mimport[0m RAGResult, Source, get_collection_counts, stream_ask           [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Users/mattiasdreyer/dreyer-ai-studio/epai/[0m[1mpdf_export.py[0m:12 in <module>              [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m   [2m  9 [0m[94mfrom[0m[90m [0m[4;96mdatetime[0m[90m [0m[94mimport[0m datetime                                                  [31m [0m
+[31m [0m   [2m 10 [0m[94mfrom[0m[90m [0m[4;96mtyping[0m[90m [0m[94mimport[0m TYPE_CHECKING                                               [31m [0m
+[31m [0m   [2m 11 [0m                                                                               [31m [0m
+[31m [0m [31m❱ [0m 12 [1;4;94mfrom[0m[1;4;90m [0m[1;4;96mreportlab[0m[1;4;96m.[0m[1;4;96mlib[0m[1;4;90m [0m[1;4;94mimport[0m[1;4m colors[0m                                               [31m [0m
+[31m [0m   [2m 13 [0m[94mfrom[0m[90m [0m[4;96mreportlab[0m[4;96m.[0m[4;96mlib[0m[4;96m.[0m[4;96menums[0m[90m [0m[94mimport[0m TA_CENTER, TA_LEFT                             [31m [0m
+[31m [0m   [2m 14 [0m[94mfrom[0m[90m [0m[4;96mreportlab[0m[4;96m.[0m[4;96mlib[0m[4;96m.[0m[4;96mpagesizes[0m[90m [0m[94mimport[0m A4                                         [31m [0m
+[31m [0m   [2m 15 [0m[94mfrom[0m[90m [0m[4;96mreportlab[0m[4;96m.[0m[4;96mlib[0m[4;96m.[0m[4;96mstyles[0m[90m [0m[94mimport[0m ParagraphStyle, getSampleStyleSheet           [31m [0m
+[31m────────────────────────────────────────────────────────────────────────────────────────[0m
+[1;91mModuleNotFoundError: [0mNo module named [32m'reportlab'[0m
+[31m──[0m[31m────────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────────[0m[31m──[0m
+[31m [0m [2m/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/stre[0m [31m [0m
+[31m [0m [2mamlit/runtime/scriptrunner/[0m[1mexec_code.py[0m:129 in exec_func_with_error_handling         [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/stre[0m [31m [0m
+[31m [0m [2mamlit/runtime/scriptrunner/[0m[1mscript_runner.py[0m:689 in code_to_exec                      [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Users/mattiasdreyer/dreyer-ai-studio/epai/[0m[1mapp.py[0m:21 in <module>                     [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m   [2m 18 [0m                                                                               [31m [0m
+[31m [0m   [2m 19 [0m[94mfrom[0m[90m [0m[4;96mconfig[0m[90m [0m[94mimport[0m ANLAGGNINGAR, OLLAMA_MODEL                                  [31m [0m
+[31m [0m   [2m 20 [0m[94mfrom[0m[90m [0m[4;96mmetadata_db[0m[90m [0m[94mimport[0m MetadataDB                                             [31m [0m
+[31m [0m [31m❱ [0m 21 [1;4;94mfrom[0m[1;4;90m [0m[1;4;96mpdf_export[0m[1;4;90m [0m[1;4;94mimport[0m[1;4m ([0m                                                       [31m [0m
+[31m [0m   [2m 22 [0m[2m│   [0m[1;4manswer_filename, export_full_report, export_single_answer, report_filename[0m [31m [0m
+[31m [0m   [2m 23 [0m[1;4m)[0m                                                                              [31m [0m
+[31m [0m   [2m 24 [0m[94mfrom[0m[90m [0m[4;96mrag[0m[90m [0m[94mimport[0m RAGResult, Source, get_collection_counts, stream_ask           [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Users/mattiasdreyer/dreyer-ai-studio/epai/[0m[1mpdf_export.py[0m:12 in <module>              [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m   [2m  9 [0m[94mfrom[0m[90m [0m[4;96mdatetime[0m[90m [0m[94mimport[0m datetime                                                  [31m [0m
+[31m [0m   [2m 10 [0m[94mfrom[0m[90m [0m[4;96mtyping[0m[90m [0m[94mimport[0m TYPE_CHECKING                                               [31m [0m
+[31m [0m   [2m 11 [0m                                                                               [31m [0m
+[31m [0m [31m❱ [0m 12 [1;4;94mfrom[0m[1;4;90m [0m[1;4;96mreportlab[0m[1;4;96m.[0m[1;4;96mlib[0m[1;4;90m [0m[1;4;94mimport[0m[1;4m colors[0m                                               [31m [0m
+[31m [0m   [2m 13 [0m[94mfrom[0m[90m [0m[4;96mreportlab[0m[4;96m.[0m[4;96mlib[0m[4;96m.[0m[4;96menums[0m[90m [0m[94mimport[0m TA_CENTER, TA_LEFT                             [31m [0m
+[31m [0m   [2m 14 [0m[94mfrom[0m[90m [0m[4;96mreportlab[0m[4;96m.[0m[4;96mlib[0m[4;96m.[0m[4;96mpagesizes[0m[90m [0m[94mimport[0m A4                                         [31m [0m
+[31m [0m   [2m 15 [0m[94mfrom[0m[90m [0m[4;96mreportlab[0m[4;96m.[0m[4;96mlib[0m[4;96m.[0m[4;96mstyles[0m[90m [0m[94mimport[0m ParagraphStyle, getSampleStyleSheet           [31m [0m
+[31m────────────────────────────────────────────────────────────────────────────────────────[0m
+[1;91mModuleNotFoundError: [0mNo module named [32m'reportlab'[0m
+[31m──[0m[31m────────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────────[0m[31m──[0m
+[31m [0m [2m/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/stre[0m [31m [0m
+[31m [0m [2mamlit/runtime/scriptrunner/[0m[1mexec_code.py[0m:129 in exec_func_with_error_handling         [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/stre[0m [31m [0m
+[31m [0m [2mamlit/runtime/scriptrunner/[0m[1mscript_runner.py[0m:689 in code_to_exec                      [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Users/mattiasdreyer/dreyer-ai-studio/epai/[0m[1mapp.py[0m:21 in <module>                     [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m   [2m 18 [0m                                                                               [31m [0m
+[31m [0m   [2m 19 [0m[94mfrom[0m[90m [0m[4;96mconfig[0m[90m [0m[94mimport[0m ANLAGGNINGAR, OLLAMA_MODEL                                  [31m [0m
+[31m [0m   [2m 20 [0m[94mfrom[0m[90m [0m[4;96mmetadata_db[0m[90m [0m[94mimport[0m MetadataDB                                             [31m [0m
+[31m [0m [31m❱ [0m 21 [1;4;94mfrom[0m[1;4;90m [0m[1;4;96mpdf_export[0m[1;4;90m [0m[1;4;94mimport[0m[1;4m ([0m                                                       [31m [0m
+[31m [0m   [2m 22 [0m[2m│   [0m[1;4manswer_filename, export_full_report, export_single_answer, report_filename[0m [31m [0m
+[31m [0m   [2m 23 [0m[1;4m)[0m                                                                              [31m [0m
+[31m [0m   [2m 24 [0m[94mfrom[0m[90m [0m[4;96mrag[0m[90m [0m[94mimport[0m RAGResult, Source, get_collection_counts, stream_ask           [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Users/mattiasdreyer/dreyer-ai-studio/epai/[0m[1mpdf_export.py[0m:12 in <module>              [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m   [2m  9 [0m[94mfrom[0m[90m [0m[4;96mdatetime[0m[90m [0m[94mimport[0m datetime                                                  [31m [0m
+[31m [0m   [2m 10 [0m[94mfrom[0m[90m [0m[4;96mtyping[0m[90m [0m[94mimport[0m TYPE_CHECKING                                               [31m [0m
+[31m [0m   [2m 11 [0m                                                                               [31m [0m
+[31m [0m [31m❱ [0m 12 [1;4;94mfrom[0m[1;4;90m [0m[1;4;96mreportlab[0m[1;4;96m.[0m[1;4;96mlib[0m[1;4;90m [0m[1;4;94mimport[0m[1;4m colors[0m                                               [31m [0m
+[31m [0m   [2m 13 [0m[94mfrom[0m[90m [0m[4;96mreportlab[0m[4;96m.[0m[4;96mlib[0m[4;96m.[0m[4;96menums[0m[90m [0m[94mimport[0m TA_CENTER, TA_LEFT                             [31m [0m
+[31m [0m   [2m 14 [0m[94mfrom[0m[90m [0m[4;96mreportlab[0m[4;96m.[0m[4;96mlib[0m[4;96m.[0m[4;96mpagesizes[0m[90m [0m[94mimport[0m A4                                         [31m [0m
+[31m [0m   [2m 15 [0m[94mfrom[0m[90m [0m[4;96mreportlab[0m[4;96m.[0m[4;96mlib[0m[4;96m.[0m[4;96mstyles[0m[90m [0m[94mimport[0m ParagraphStyle, getSampleStyleSheet           [31m [0m
+[31m────────────────────────────────────────────────────────────────────────────────────────[0m
+[1;91mModuleNotFoundError: [0mNo module named [32m'reportlab'[0m
+  Stopping...
