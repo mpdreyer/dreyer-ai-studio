@@ -115,7 +115,6 @@ def render_chat(project: dict | None, sb):
                 agent_name=target_agent,
                 messages=api_messages,
                 project_context=ctx,
-                max_tokens=1024,
             )
 
         if project_id:

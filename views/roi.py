@@ -70,7 +70,6 @@ Avsluta med en tydlig uppmaning till beslut."""
                     "Narratrix",
                     [{"role": "user", "content": prompt}],
                     project_context=ctx,
-                    max_tokens=1200,
                 )
 
             if project_id:
@@ -97,7 +96,6 @@ Ge ett förberett svar på varje invändning. Kort och säljande."""
                     "Kontrakto",
                     [{"role": "user", "content": prompt}],
                     project_context=ctx,
-                    max_tokens=600,
                 )
             st.markdown("**Kontrakto — Invändningar & svar:**")
             st.markdown(reply)

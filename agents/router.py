@@ -82,6 +82,24 @@ OPENAI_MODEL   = "gpt-4o"
 GEMINI_MODEL   = "gemini-1.5-pro"
 DEEPSEEK_MODEL = "deepseek-reasoner"
 
+# ── Token-limits per agent ────────────────────────────────────────────────────
+
+AGENT_TOKEN_LIMITS = {
+    "Architetto":  2048,  # Arkitekturanalys och projektbedömning = lång
+    "Narratrix":   2048,  # Manualer, rapporter och storytelling = lång
+    "Codex":       2048,  # Kodförslag och implementationer = lång
+    "Diavolo":     1500,  # Säkerhets- och adversarial-analys = medellång
+    "Logica":      1500,  # Eval och testfall = medellång
+    "Datatjej":    1200,  # Data och token-analys = medellång
+    "Scalero":     1200,  # Deployment-guider = medellång
+    "Guardiano":   1200,  # Compliance och etik = medellång
+    "Gemma":       1200,
+    "Kontrakto":   1000,  # Affärskommunikation = kortare
+    "Risico":      1000,  # Risklistor = kortare
+    "Memoria":     1000,  # Mönster och historik = kortare
+    "Spejaren":     800,  # Nyhetssammanfattningar = kortare
+}
+
 
 # ── Huvud-router ──────────────────────────────────────────────────────────────
 
@@ -89,13 +107,16 @@ def route_message(
     agent_name: str,
     messages: list[dict],
     project_context: str = "",
-    max_tokens: int = 1024,
+    max_tokens: int = None,  # None = använd agent-specifikt limit
 ) -> tuple[str, int, float]:
     """
     Skickar meddelanden till rätt provider baserat på agent.
     Returnerar (svar, tokens_totalt, kostnad_usd).
     Fallback till Claude om annan provider misslyckas.
     """
+    if max_tokens is None:
+        max_tokens = AGENT_TOKEN_LIMITS.get(agent_name, 1024)
+
     agent    = AGENTS.get(agent_name, AGENTS["Architetto"])
     provider = AGENT_MODEL_MAP.get(agent_name, "claude")
 

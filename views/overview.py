@@ -186,7 +186,6 @@ def render_overview(project: dict | None, sb):
                 "Architetto",
                 [{"role": "user", "content": prompt}],
                 project_context=build_project_context(project),
-                max_tokens=600,
             )
 
         st.success(f"**🏛️ Architetto — Projektanalys**\n\n{reply}")
@@ -214,7 +213,6 @@ def render_overview(project: dict | None, sb):
                                 "Architetto",
                                 [{"role": "user", "content": agent_prompt}],
                                 project_context=build_project_context(project),
-                                max_tokens=800,
                             )
                         st.info(f"**Architetto:** {reply}")
                         save_message(sb, project_id, "assistant", reply,

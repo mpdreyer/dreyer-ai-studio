@@ -79,7 +79,6 @@ Skriv konkreta bash-kommandon där tillämpligt."""
                 "Scalero",
                 [{"role": "user", "content": prompt}],
                 project_context=ctx,
-                max_tokens=1000,
             )
 
         if project_id:

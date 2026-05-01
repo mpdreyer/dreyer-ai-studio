@@ -175,7 +175,6 @@ def _render_agent_panel(issue: dict, sb):
                 reply, _, _ = route_message(
                     selected,
                     [{"role": "user", "content": prompt}],
-                    max_tokens=700,
                 )
             log = _parse_log(issue.get("fix_notes"))
             log.append({

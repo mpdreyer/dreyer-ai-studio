@@ -15,3 +15,9 @@ env/
 
 # Streamlit
 .streamlit/cache/
+
+# cc-sessions runtime files
+sessions/sessions-state.json
+sessions/package.json
+sessions/transcripts/
+sessions/.archived/

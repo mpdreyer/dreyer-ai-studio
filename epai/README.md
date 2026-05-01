@@ -16,10 +16,14 @@ AI:ns namn är **Ain**. Hon baserar alla svar på era egna dokument och mätvär
 
 ## Installationsguide — Windows 11
 
-### Steg 1 — Installera Python 3.11
+> **Genomförd installation 2026-04-11:** Se [INSTALLATION_LOG.md](INSTALLATION_LOG.md) för faktiska versioner och avvikelser.
+> Installerat med Python 3.13.13, Ollama 0.20.5, modell `gemma4:26b`.
+
+### Steg 1 — Installera Python 3.11 (eller 3.13)
 
 1. Gå till [python.org/downloads](https://www.python.org/downloads/)
-2. Ladda ner **Python 3.11.x** (64-bit)
+2. Ladda ner **Python 3.11.x** eller **3.13.x** (64-bit)
+   - Vid Python 3.13: pandas uppgraderas till 2.2.3 och Pillow till 10.4.0 automatiskt
 3. Kör installationsfilen — **bocka i "Add Python to PATH"**
 4. Verifiera i CMD: `python --version`
 
@@ -56,12 +60,14 @@ Krävs för handskrivna checklistor och inskannade tillsynsprotokoll.
 3. Öppna CMD och kör:
 
 ```cmd
-ollama pull mistral
+ollama pull gemma4:26b
 ollama pull nomic-embed-text
 ```
 
-> **Obs:** `mistral` är ~4 GB. `nomic-embed-text` är ~270 MB.
-> Ollama måste köra i bakgrunden när EPAi används.
+> **Obs:** `gemma4:26b` är ~17 GB (MoE, 128 experter, 128K context, multimodal).
+> `nomic-embed-text` är ~274 MB. Ollama måste köra i bakgrunden när EPAi används.
+>
+> Alternativt lättare alternativ: `ollama pull mistral` (~4 GB) eller `ollama pull gemma2:9b` (~5 GB).
 
 ---
 
@@ -169,7 +175,7 @@ Ladda ner modellen först: `ollama pull llama3.1:8b`
 | `Tesseract not found` | Kontrollera att Tesseract är i PATH |
 | `pdf2image: pdftoppm not found` | Kontrollera att Poppler bin/ är i PATH |
 | `Inga dokument indexerade` | Kör `python epai\ingest.py --anlaggning all` |
-| Långsamma svar | Byt till `mistral` (snabbare än llama3.1) |
+| Långsamma svar | Byt till `mistral` eller `gemma2:9b` (snabbare än gemma4:26b) |
 
 ---
 

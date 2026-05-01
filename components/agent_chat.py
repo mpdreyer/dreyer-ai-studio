@@ -180,7 +180,6 @@ def render_agent_chat():
                         selected,
                         messages,
                         project_context=context,
-                        max_tokens=800,
                     )
 
                 # Uppdatera session state

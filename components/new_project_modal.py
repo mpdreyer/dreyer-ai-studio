@@ -57,7 +57,7 @@ def _call_architetto(sb, project_id: str, project_name: str, brief_text: str):
     )
 
     messages = [{"role": "user", "content": prompt}]
-    content, total_tokens, cost = route_message(agent_name, messages, max_tokens=1024)
+    content, total_tokens, cost = route_message(agent_name, messages)
 
     save_message(
         sb, project_id, "assistant", content,

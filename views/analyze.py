@@ -25,7 +25,6 @@ def render_analyze(project: dict | None, sb):
                 [{"role": "user", "content":
                   f"Ge en ärlig statusbedömning av projektet:\n{ctx}\n\n"
                   "Vad är bra? Vad är oroande? Vad är nästa steg?"}],
-                max_tokens=400,
             )
 
         with st.spinner("Risico identifierar risker…"):
@@ -34,7 +33,6 @@ def render_analyze(project: dict | None, sb):
                 [{"role": "user", "content":
                   f"Identifiera de tre största riskerna i detta projekt:\n{ctx}\n\n"
                   "Var specifik och konstruktiv. Rangordna HÖG/MEDIUM/LÅG."}],
-                max_tokens=300,
             )
 
         with st.spinner("Datatjej analyserar token-ekonomin…"):
@@ -45,7 +43,6 @@ def render_analyze(project: dict | None, sb):
                   f"Analysera token-förbrukningen för projektet:\n"
                   f"{json.dumps(token_data, ensure_ascii=False)}\n\n"
                   "Är vi på rätt spår kostnadsmässigt? Finns avvikelser?"}],
-                max_tokens=300,
             )
 
         with st.spinner("Diavolo granskar säkerheten…"):
@@ -55,7 +52,6 @@ def render_analyze(project: dict | None, sb):
                   f"Granska projektet ur säkerhetsperspektiv:\n{ctx}\n\n"
                   "Finns det säkerhetsrisker, bias-risker eller etikproblem? "
                   "Rangordna severity HÖG/MEDIUM/LÅG."}],
-                max_tokens=300,
             )
 
         st.markdown("---")

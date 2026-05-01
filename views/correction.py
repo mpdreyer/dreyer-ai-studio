@@ -134,6 +134,5 @@ def render_correction(project: dict | None, sb):
                 reply, _tokens, _cost = route_message(
                     "Datatjej",
                     [{"role": "user", "content": prompt}],
-                    max_tokens=400,
                 )
             st.info(f"**Gemma:** {reply}")

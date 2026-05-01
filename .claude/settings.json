@@ -1,23 +1,59 @@
 {
   "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"%CLAUDE_PROJECT_DIR%\\sessions\\hooks\\user_messages.js\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"%CLAUDE_PROJECT_DIR%\\sessions\\hooks\\subagent_hooks.js\""
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit|Task|Bash|TodoWrite|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"%CLAUDE_PROJECT_DIR%\\sessions\\hooks\\sessions_enforce.js\""
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
-        "matcher": "Edit|Write|Bash",
-        "command": "code-review-graph update --quiet --skip-flows",
-        "timeout": 5000
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"%CLAUDE_PROJECT_DIR%\\sessions\\hooks\\post_tool_use.js\""
+          }
+        ]
       }
     ],
     "SessionStart": [
       {
-        "command": "code-review-graph status --json",
-        "timeout": 3000
-      }
-    ],
-    "PreCommit": [
-      {
-        "command": "code-review-graph detect-changes --brief",
-        "timeout": 10000
+        "matcher": "startup|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"%CLAUDE_PROJECT_DIR%\\sessions\\hooks\\kickstart_session_start.js\""
+          }
+        ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "node \"%CLAUDE_PROJECT_DIR%\\sessions\\statusline.js\""
   }
 }

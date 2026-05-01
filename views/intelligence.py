@@ -98,7 +98,6 @@ def render_intelligence(project: dict | None, sb):
             reply, tokens, cost = route_message(
                 "Spejaren",
                 [{"role": "user", "content": SCAN_PROMPT}],
-                max_tokens=800,
             )
         if project_id:
             save_message(
@@ -149,6 +148,5 @@ def render_intelligence(project: dict | None, sb):
                 reply, _tokens, _cost = route_message(
                     "Spejaren",
                     [{"role": "user", "content": prompt}],
-                    max_tokens=300,
                 )
             st.info(f"**Spejaren:** {reply}")
