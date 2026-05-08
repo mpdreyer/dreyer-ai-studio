@@ -122,6 +122,15 @@ SPECIFIKA INSTRUKTIONER FOR DENNA PROMPT:
 ---
 TARGET: {target}
 PROMPT TYPE: {prompt_type}
+
+---
+VIKTIG REGEL — alltid: Avsluta varje genererad prompt med ett extra steg
+som ber utforaren att synka andringarna till ratt NotebookLM-notebook
+via nlm CLI. Format:
+
+## Steg X: Synka till NotebookLM
+Kor: PYTHONIOENCODING=utf-8 nlm source add [NOTEBOOK_UUID] --text "$(cat [andrade filer])" --title "[filnamn] — [kort beskrivning]"
+(eller om nlm inte fungerar: skapa filerna i Google Drive-mappen 'NotebookLM Sources' sa Mattias kan flytta dem manuellt)
 """
 
     # 5. Bygg user message
