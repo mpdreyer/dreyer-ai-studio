@@ -20,6 +20,7 @@ VIEW_REGISTRY: dict[str, tuple[str, str]] = {
     "notebooklm":    ("views.notebooklm_view","render_notebooklm"),
     "user_manual":   ("views.user_manual",    "render_user_manual"),
     "issues":        ("views.issues",         "render_issues"),
+    "esecutore":     ("views.esecutore",      "render_esecutore"),
 }
 
 

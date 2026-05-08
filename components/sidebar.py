@@ -1,7 +1,7 @@
 import streamlit as st
 from agents.council import AGENTS, agent_list
 from db.portfolio_client import get_active_projects_all
-from core.state import get_active_view, set_active_view
+from core.state import get_active_view, set_active_view, clear_project_cache
 
 
 VIEWS = {
@@ -13,6 +13,7 @@ VIEWS = {
     "chat":         ("💬", "Rådslag"),
     "tasks":        ("✅", "Uppgifter"),
     "deliverables": ("📦", "Leveranser"),
+    "esecutore":    ("⚡", "Esecutore"),
     "roi":          ("💰", "ROI-kalkylator"),
     "swarm":        ("🐝", "Testsvärm"),
     "deploy":       ("🔒", "Deployment"),
@@ -68,6 +69,7 @@ def render_sidebar(project: dict | None, sb=None) -> str:
             )
             chosen_id = project_ids[chosen_idx]
             if chosen_id and chosen_id != st.session_state.get("ss_active_project_id"):
+                clear_project_cache()
                 st.session_state["ss_active_project_id"] = chosen_id
                 st.rerun()
 

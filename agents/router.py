@@ -75,6 +75,9 @@ AGENT_MODEL_MAP = {
     "Diavolo":     "deepseek",
     "Risico":      "deepseek",
     "Guardiano":   "deepseek",
+
+    # Claude — execution, task orchestration
+    "Esecutore":   "claude",
 }
 
 CLAUDE_MODEL   = "claude-sonnet-4-5"
@@ -98,6 +101,7 @@ AGENT_TOKEN_LIMITS = {
     "Risico":      1000,  # Risklistor = kortare
     "Memoria":     1000,  # Mönster och historik = kortare
     "Spejaren":     800,  # Nyhetssammanfattningar = kortare
+    "Esecutore":   4000,  # Task execution — lång output för planer och kod
 }
 
 
@@ -234,6 +238,7 @@ def detect_agent_from_message(message: str) -> str:
         "Spejaren":  ["nyhet", "omvärld", "modell", "lansering", "forskning"],
         "Memoria":   ["tidigare", "pattern", "liknande", "minns", "historia", "projekt"],
         "Risico":    ["risk", "problem", "ifrågasätt", "kritik", "alternativ"],
+        "Esecutore": ["exekvera", "utför", "kör", "implementera", "starta", "execute", "run task"],
     }
     for agent, keywords in routing.items():
         if any(kw in msg for kw in keywords):
@@ -247,11 +252,17 @@ def build_project_context(project: dict) -> str:
     phases = ["Brief", "Data", "Prompts", "Bygg", "Diavolo", "Demo", "Nästa steg"]
     cur    = project.get("current_phase", 1)
     pname  = phases[cur - 1] if 0 < cur <= len(phases) else "Okänd"
+    pid    = project.get("id", "okänt")
     return (
-        f"Projekt: {project.get('name', 'Okänt')} | "
-        f"Kund: {project.get('client', '—')} | "
-        f"Fas {cur}/7: {pname} | "
-        f"Health: {project.get('health_score', 0)}/100 | "
-        f"Token: {project.get('token_used', 0):.2f}/{project.get('token_budget', 20):.0f} USD | "
-        f"Deployment: {project.get('deployment_mode', 'cloud')}"
+        f"DU ARBETAR ENBART MED DETTA PROJEKT — IGNORERA ALL ANNAN KONTEXT:\n"
+        f"Projekt-ID: {pid}\n"
+        f"Projektnamn: {project.get('name', 'Okänt')}\n"
+        f"Kund: {project.get('client', '—')}\n"
+        f"Beskrivning: {project.get('description', '—')}\n"
+        f"Fas {cur}/7: {pname}\n"
+        f"Health: {project.get('health_score', 0)}/100\n"
+        f"Success criteria: {project.get('success_criteria') or 'Ej definierade'}\n"
+        f"Token: {project.get('token_used', 0):.2f}/{project.get('token_budget', 20):.0f} USD\n"
+        f"Deployment: {project.get('deployment_mode', 'cloud')}\n"
+        f"Svara ENDAST baserat på ovanstående projekt."
     )
