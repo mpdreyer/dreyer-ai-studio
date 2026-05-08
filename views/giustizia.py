@@ -138,6 +138,77 @@ def render_giustizia(project: dict = None, sb=None):
     for key in ["giustizia_result", "giustizia_meta"]:
         if key not in st.session_state:
             st.session_state[key] = None
+    if "giustizia_manual_brief" not in st.session_state:
+        st.session_state["giustizia_manual_brief"] = False
+
+    # --- BRIEF-CHECK ------------------------------------------------------
+    has_brief = bool(project.get('brief_raw'))
+
+    if not has_brief:
+        st.markdown("---")
+        st.info(
+            f"**{project['name']}** saknar en projektbrief.\n\n"
+            "Giustizia behover veta vad projektet handlar om for att "
+            "kunna gora en korrekt compliance-analys."
+        )
+
+        col_brief1, col_brief2 = st.columns(2)
+
+        with col_brief1:
+            if st.button(
+                "\u270d\ufe0f JAG SKRIVER BRIEFEN SJALV",
+                use_container_width=True,
+                key="giustizia_write_brief"
+            ):
+                st.session_state["giustizia_manual_brief"] = True
+                st.rerun()
+
+        with col_brief2:
+            if st.button(
+                "\U0001f916 LAT GIUSTIZIA GENERERA BRIEF",
+                use_container_width=True,
+                key="giustizia_generate_brief",
+                type="primary"
+            ):
+                with st.spinner(f"Genererar brief for {project['name']}..."):
+                    try:
+                        brief_result = run_analysis(
+                            analysis_type="custom",
+                            input_text=(
+                                f"Generera en kort projektbrief (max 300 ord) for ett projekt "
+                                f"som heter '{project['name']}'. Beskriv vad det troligen ar, "
+                                f"vilket syfte det har och vilken tech stack som kan vara relevant. "
+                                f"Skriv pa svenska."
+                            ),
+                            use_project_context=False,
+                        )
+                        sb.table("projects").update({
+                            "brief_raw": brief_result["analysis"]
+                        }).eq("id", project["id"]).execute()
+                        st.success("\u2713 Brief genererad och sparad!")
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"Fel: {e}")
+
+        if st.session_state.get("giustizia_manual_brief"):
+            st.markdown("**Beskriv projektet:**")
+            manual_brief = st.text_area(
+                "manual_brief",
+                label_visibility="collapsed",
+                placeholder="Beskriv vad projektet gor, vilken data som behandlas, vilka anvandare som berors...",
+                height=150,
+                key="giustizia_manual_input"
+            )
+            if st.button("\U0001f4be SPARA SOM BRIEF", key="giustizia_save_brief"):
+                if manual_brief.strip():
+                    sb.table("projects").update({
+                        "brief_raw": manual_brief
+                    }).eq("id", project["id"]).execute()
+                    st.session_state["giustizia_manual_brief"] = False
+                    st.success("\u2713 Brief sparad!")
+                    st.rerun()
+
+        return
 
     # --- LAYOUT -----------------------------------------------------------
     left, right = st.columns([1, 1], gap="large")
@@ -158,12 +229,14 @@ def render_giustizia(project: dict = None, sb=None):
 
         st.markdown("<br>", unsafe_allow_html=True)
 
-        # Input
-        st.markdown("**Vad ska analyseras?**")
+        # Input — brief finns, sa fritext ar valfri
+        st.markdown("**Extra kontext** *(valfritt)*")
+        st.caption("Projektet har en brief -- Giustizia analyserar den automatiskt.")
+
         input_text = st.text_area(
             "input",
             label_visibility="collapsed",
-            placeholder="Beskriv ditt AI-system, spec, user story, eller stall en juridisk fraga...\n\nEx: Vi bygger ett system som analyserar CV:n och rankar jobbsokande automatiskt.",
+            placeholder="Valfritt -- lagg till specifik kontext eller fraga...\n\nEx: Fokusera pa HR-modulen som rankar kandidater automatiskt.",
             height=180,
             key="giustizia_input"
         )
@@ -203,7 +276,7 @@ biometri, kritisk infrastruktur, utbildning, rattsvasendet
         st.markdown("---")
         generate_btn = st.button(
             "\u2696\ufe0f ANALYSERA MED GIUSTIZIA",
-            disabled=not input_text,
+            disabled=False,
             use_container_width=True,
             type="primary",
             key="giustizia_generate"
@@ -217,10 +290,19 @@ biometri, kritisk infrastruktur, utbildning, rattsvasendet
                 try:
                     project_context = ""
                     if use_project_context:
+                        brief = project.get('brief_raw') or ''
+                        tech_stack = project.get('tech_stack')
+                        if isinstance(tech_stack, list):
+                            tech_stack_str = ', '.join(tech_stack)
+                        elif isinstance(tech_stack, str):
+                            tech_stack_str = tech_stack
+                        else:
+                            tech_stack_str = 'Ej specificerad'
+
                         project_context = f"""
 Projektnamn: {project['name']}
-Brief: {project.get('brief_raw', '')[:800]}
-Tech stack: {project.get('tech_stack', '')}
+Brief: {brief[:800] if brief else 'Ingen brief registrerad -- beskriv systemet i input-faltet nedan.'}
+Tech stack: {tech_stack_str}
 """
                     result = run_analysis(
                         analysis_type=analysis_type,
