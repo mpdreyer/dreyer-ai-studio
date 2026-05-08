@@ -14,6 +14,7 @@ VIEWS = {
     "tasks":        ("✅", "Uppgifter"),
     "deliverables": ("📦", "Leveranser"),
     "esecutore":    ("⚡", "Esecutore"),
+    "giustizia":    ("⚖️", "Giustizia"),
     "roi":          ("💰", "ROI-kalkylator"),
     "swarm":        ("🐝", "Testsvärm"),
     "deploy":       ("🔒", "Deployment"),

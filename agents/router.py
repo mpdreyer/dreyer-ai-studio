@@ -78,6 +78,9 @@ AGENT_MODEL_MAP = {
 
     # Claude — execution, task orchestration
     "Esecutore":   "claude",
+
+    # Claude — legal counsel, compliance
+    "Giustizia":   "claude",
 }
 
 CLAUDE_MODEL   = "claude-sonnet-4-5"
@@ -102,6 +105,7 @@ AGENT_TOKEN_LIMITS = {
     "Memoria":     1000,  # Mönster och historik = kortare
     "Spejaren":     800,  # Nyhetssammanfattningar = kortare
     "Esecutore":   4000,  # Task execution — lång output för planer och kod
+    "Giustizia":   6000,  # Juridiska analyser — långa och detaljerade
 }
 
 
@@ -232,7 +236,8 @@ def detect_agent_from_message(message: str) -> str:
         "Codex":     ["kod", "bygg", "streamlit", "python", "implementation", "deploy"],
         "Datatjej":  ["data", "pipeline", "databas", "supabase", "api", "integration"],
         "Narratrix": ["demo", "presentation", "kund", "pitch", "one-pager", "slides"],
-        "Guardiano": ["gdpr", "compliance", "etik", "risk", "ai act", "bias"],
+        "Giustizia": ["gdpr", "ai act", "eidas", "compliance", "juridik", "legal", "dataskydd", "personuppgifter", "riskklassificering", "förordning", "regulation", "compliance check"],
+        "Guardiano": ["etik", "bias", "säkerhetsgranskning"],
         "Scalero":   ["deploy", "hosting", "server", "kostnad", "skala", "produktion"],
         "Kontrakto": ["kontrakt", "affär", "offert", "budget", "förhandl"],
         "Spejaren":  ["nyhet", "omvärld", "modell", "lansering", "forskning"],

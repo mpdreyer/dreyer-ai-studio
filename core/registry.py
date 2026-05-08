@@ -21,6 +21,7 @@ VIEW_REGISTRY: dict[str, tuple[str, str]] = {
     "user_manual":   ("views.user_manual",    "render_user_manual"),
     "issues":        ("views.issues",         "render_issues"),
     "esecutore":     ("views.esecutore",      "render_esecutore"),
+    "giustizia":     ("views.giustizia",      "render_giustizia"),
 }
 
 
